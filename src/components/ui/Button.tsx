@@ -53,7 +53,9 @@ export function Button({
   if (href) {
     return (
       <motion.a
-        href={href}
+        href={disabled ? undefined : href}
+        aria-disabled={disabled || undefined}
+        tabIndex={disabled ? -1 : undefined}
         whileHover={disabled ? undefined : { scale: 1.02 }}
         whileTap={disabled ? undefined : { scale: 0.98 }}
         className={combinedClassName}

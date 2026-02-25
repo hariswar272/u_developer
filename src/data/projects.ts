@@ -9,8 +9,6 @@ export const projects: Project[] = [
     image: "/images/projects/project-1.png",
     tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
     category: "fullstack",
-    liveUrl: "#",
-    githubUrl: "#",
     featured: true,
   },
   {
@@ -21,8 +19,6 @@ export const projects: Project[] = [
     image: "/images/projects/project-2.png",
     tags: ["React", "Node.js", "Socket.io", "MongoDB", "Redux"],
     category: "fullstack",
-    liveUrl: "#",
-    githubUrl: "#",
     featured: true,
   },
   {
@@ -33,8 +29,6 @@ export const projects: Project[] = [
     image: "/images/projects/project-3.png",
     tags: ["Next.js", "OpenAI API", "Python", "FastAPI", "Tailwind CSS"],
     category: "fullstack",
-    liveUrl: "#",
-    githubUrl: "#",
   },
   {
     id: "4",
@@ -44,8 +38,6 @@ export const projects: Project[] = [
     image: "/images/projects/project-4.png",
     tags: ["React", "D3.js", "WebSocket", "Express", "Chart.js"],
     category: "frontend",
-    liveUrl: "#",
-    githubUrl: "#",
   },
   {
     id: "5",
@@ -55,8 +47,6 @@ export const projects: Project[] = [
     image: "/images/projects/project-5.png",
     tags: ["Node.js", "Express", "MongoDB", "Redis", "JWT"],
     category: "backend",
-    liveUrl: "#",
-    githubUrl: "#",
   },
   {
     id: "6",
@@ -66,7 +56,5 @@ export const projects: Project[] = [
     image: "/images/projects/project-6.png",
     tags: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Framer Motion"],
     category: "fullstack",
-    liveUrl: "#",
-    githubUrl: "#",
   },
 ];

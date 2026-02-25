@@ -30,7 +30,7 @@ export const skills: Skill[] = [
   { name: "Docker", icon: "SiDocker", category: "tools" },
   { name: "AWS", icon: "SiAmazonwebservices", category: "tools" },
   { name: "Vercel", icon: "SiVercel", category: "tools" },
-  { name: "VS Code", icon: "SiVscodium", category: "tools" },
+  { name: "VS Code", icon: "SiVisualstudiocode", category: "tools" },
   { name: "Figma", icon: "SiFigma", category: "tools" },
 ];
 
