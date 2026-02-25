@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { Download, Sparkles } from "lucide-react";
+import { Download, Sparkles, ArrowRight } from "lucide-react";
 import { TypeWriter } from "@/components/animations/TypeWriter";
 import { Button } from "@/components/ui/Button";
 import { profile } from "@/data/profile";
@@ -101,8 +101,37 @@ function FloatingDiamond2D({
   );
 }
 
+// Animated word component for staggered word reveals
+function AnimatedWord({
+  word,
+  delay,
+  className,
+}: {
+  word: string;
+  delay: number;
+  className?: string;
+}) {
+  return (
+    <motion.span
+      className={`inline-block ${className || ""}`}
+      initial={{ opacity: 0, y: 40, filter: "blur(12px)", rotateX: 45 }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)", rotateX: 0 }}
+      transition={{
+        duration: 0.7,
+        delay,
+        ease: [0.25, 0.4, 0.25, 1],
+      }}
+    >
+      {word}
+    </motion.span>
+  );
+}
+
 export function Hero() {
   const stagger = (i: number) => 0.15 + i * 0.15;
+
+  // Split tagline into words for word-by-word animation
+  const taglineWords = profile.tagline.split(" ");
 
   return (
     <section
@@ -163,7 +192,7 @@ export function Hero() {
 
       {/* Content — centered over the globe */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Badge */}
+        {/* Badge — with reveal animation */}
         <motion.div
           initial={{ opacity: 0, y: 30, scale: 0.8, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
@@ -176,20 +205,45 @@ export function Hero() {
           >
             <Sparkles size={15} />
           </motion.span>
-          <span>Student at VVIT &mdash; Cyber Security</span>
+          <motion.span
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: stagger(0) + 0.3 }}
+          >
+            Student at VVIT &mdash; Cyber Security
+          </motion.span>
         </motion.div>
 
-        {/* Greeting */}
-        <motion.p
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: stagger(1), ease: [0.25, 0.4, 0.25, 1] }}
-          className="text-foreground-muted text-lg md:text-xl mb-4 font-mono tracking-wider"
+        {/* Greeting — with clip reveal + slide up */}
+        <motion.div
+          className="overflow-hidden mb-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: stagger(1) }}
         >
-          Hello, I&apos;m
-        </motion.p>
+          <motion.p
+            initial={{ y: "100%", opacity: 0 }}
+            animate={{ y: "0%", opacity: 1 }}
+            transition={{
+              duration: 0.8,
+              delay: stagger(1),
+              ease: [0.25, 0.4, 0.25, 1],
+            }}
+            className="text-foreground-muted text-lg md:text-xl font-mono tracking-wider"
+          >
+            <motion.span
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: stagger(1) + 0.2, type: "spring", stiffness: 200 }}
+              className="inline-block mr-2"
+            >
+              👋
+            </motion.span>
+            Hello, I&apos;m
+          </motion.p>
+        </motion.div>
 
-        {/* Name — letter by letter with 3D perspective */}
+        {/* Name — letter by letter with 3D perspective flip */}
         <motion.h1
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] font-bold font-display mb-4 leading-tight"
           initial={{ opacity: 0 }}
@@ -213,18 +267,19 @@ export function Hero() {
               </motion.span>
             ))}
           </span>
-        </motion.h1>
-
-        {/* Animated gradient divider */}
-        <motion.div
-          className="flex justify-center mb-5"
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 1, delay: stagger(4), ease: [0.25, 0.4, 0.25, 1] }}
-        >
-          <div className="relative h-[2px] w-32 md:w-48 overflow-hidden rounded-full">
+          {/* Animated underline beneath the name */}
+          <motion.div
+            className="mx-auto mt-1 h-[3px] rounded-full overflow-hidden"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: "60%", opacity: 1 }}
+            transition={{
+              duration: 1.2,
+              delay: stagger(2) + profile.name.length * 0.045 + 0.2,
+              ease: [0.25, 0.4, 0.25, 1],
+            }}
+          >
             <motion.div
-              className="absolute inset-0 rounded-full"
+              className="h-full w-full rounded-full"
               style={{
                 background: "linear-gradient(90deg, #6c63ff, #00c6ff, #ff6b9d, #6c63ff)",
                 backgroundSize: "200% 100%",
@@ -232,14 +287,14 @@ export function Hero() {
               animate={{ backgroundPosition: ["0% 0%", "200% 0%"] }}
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
             />
-          </div>
-        </motion.div>
+          </motion.div>
+        </motion.h1>
 
-        {/* Typing effect */}
+        {/* Typing effect — with enhanced entrance */}
         <motion.div
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: stagger(5), ease: [0.25, 0.4, 0.25, 1] }}
+          initial={{ opacity: 0, y: 30, scale: 0.95, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, delay: stagger(5), ease: [0.25, 0.4, 0.25, 1] }}
           className="text-xl sm:text-2xl md:text-3xl text-foreground-muted mb-5 h-12 font-light"
         >
           <TypeWriter
@@ -250,29 +305,55 @@ export function Hero() {
           />
         </motion.div>
 
-        {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: stagger(6), ease: [0.25, 0.4, 0.25, 1] }}
-          className="text-foreground-muted max-w-2xl mx-auto mb-12 text-base sm:text-lg leading-relaxed"
+        {/* Tagline — word by word reveal */}
+        <div
+          className="max-w-2xl mx-auto mb-12 text-base sm:text-lg leading-relaxed"
+          style={{ perspective: "400px" }}
         >
-          {profile.tagline}
-        </motion.p>
+          <span className="flex flex-wrap justify-center gap-x-[0.35em]">
+            {taglineWords.map((word, i) => (
+              <AnimatedWord
+                key={`${word}-${i}`}
+                word={word}
+                delay={stagger(6) + i * 0.06}
+                className="text-foreground-muted"
+              />
+            ))}
+          </span>
+        </div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons — with premium entrance */}
         <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: stagger(7), ease: [0.25, 0.4, 0.25, 1] }}
+          transition={{ duration: 0.7, delay: stagger(8), ease: [0.25, 0.4, 0.25, 1] }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.98 }}>
+          <motion.div
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: stagger(8) + 0.1 }}
+          >
             <Button variant="primary" size="lg" href="#projects">
               View My Work
+              <motion.span
+                className="inline-block ml-1"
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <ArrowRight size={18} />
+              </motion.span>
             </Button>
           </motion.div>
-          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.98 }}>
+          <motion.div
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: stagger(8) + 0.2 }}
+          >
             <Button variant="outline" size="lg" href="/resume.pdf">
               <Download size={18} className="mr-2" />
               Download Resume
