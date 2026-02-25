@@ -2,16 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import {
-  ArrowDown,
-  Download,
-  Sparkles,
-  Code2,
-  Braces,
-  Terminal,
-  Zap,
-  Globe,
-} from "lucide-react";
+import { Download, Sparkles } from "lucide-react";
 import { TypeWriter } from "@/components/animations/TypeWriter";
 import { Button } from "@/components/ui/Button";
 import { profile } from "@/data/profile";
@@ -24,18 +15,18 @@ const Scene = dynamic(
   }
 );
 
-// Glowing floating particle
-function FloatingParticle({
-  delay,
+// Twinkling star particle (CSS-based for performance)
+function StarParticle({
   x,
   y,
   size,
+  delay,
   color,
 }: {
-  delay: number;
   x: string;
   y: string;
   size: number;
+  delay: number;
   color: string;
 }) {
   return (
@@ -47,16 +38,14 @@ function FloatingParticle({
         width: size,
         height: size,
         background: color,
-        boxShadow: `0 0 ${size * 4}px ${color}, 0 0 ${size * 8}px ${color}`,
+        boxShadow: `0 0 ${size * 3}px ${color}`,
       }}
-      initial={{ opacity: 0, scale: 0 }}
       animate={{
-        opacity: [0, 1, 0.5, 1, 0],
-        scale: [0, 1.2, 0.8, 1.2, 0],
-        y: [0, -50, -25, -70, -100],
+        opacity: [0.2, 1, 0.2],
+        scale: [0.8, 1.3, 0.8],
       }}
       transition={{
-        duration: 7,
+        duration: 2 + Math.random() * 2,
         delay,
         repeat: Infinity,
         ease: "easeInOut",
@@ -65,33 +54,50 @@ function FloatingParticle({
   );
 }
 
-// Animated grid line component
-function AnimatedGridLine({
-  direction,
-  position,
+// Floating 2D diamond shape (for layered depth)
+function FloatingDiamond2D({
+  x,
+  y,
+  size,
   delay,
+  color,
+  duration,
 }: {
-  direction: "horizontal" | "vertical";
-  position: string;
+  x: string;
+  y: string;
+  size: number;
   delay: number;
+  color: string;
+  duration: number;
 }) {
-  const isHorizontal = direction === "horizontal";
   return (
     <motion.div
-      className="absolute pointer-events-none"
-      style={{
-        [isHorizontal ? "top" : "left"]: position,
-        [isHorizontal ? "left" : "top"]: 0,
-        [isHorizontal ? "right" : "bottom"]: 0,
-        [isHorizontal ? "height" : "width"]: "1px",
-        background: isHorizontal
-          ? "linear-gradient(90deg, transparent, rgba(108,99,255,0.08), rgba(0,198,255,0.06), transparent)"
-          : "linear-gradient(180deg, transparent, rgba(108,99,255,0.08), rgba(0,198,255,0.06), transparent)",
+      className="absolute"
+      style={{ left: x, top: y }}
+      animate={{
+        y: [0, -20, 0],
+        rotate: [0, 180, 360],
+        opacity: [0.3, 0.7, 0.3],
       }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay, duration: 1.5, ease: "easeOut" }}
-    />
+      transition={{
+        duration,
+        delay,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+    >
+      <div
+        className="border backdrop-blur-sm"
+        style={{
+          width: size,
+          height: size,
+          transform: "rotate(45deg)",
+          borderColor: color,
+          background: `${color}08`,
+          boxShadow: `0 0 ${size}px ${color}20`,
+        }}
+      />
+    </motion.div>
   );
 }
 
@@ -103,112 +109,66 @@ export function Hero() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Premium aurora background */}
-      <div className="absolute inset-0 mesh-gradient" />
-      <div className="absolute inset-0 aurora-bg" />
+      {/* Soft radial gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#f0f0ff] via-white to-[#f5f8ff]" />
 
-      {/* Animated subtle grid */}
-      <AnimatedGridLine direction="horizontal" position="20%" delay={0.5} />
-      <AnimatedGridLine direction="horizontal" position="40%" delay={0.7} />
-      <AnimatedGridLine direction="horizontal" position="60%" delay={0.9} />
-      <AnimatedGridLine direction="horizontal" position="80%" delay={1.1} />
-      <AnimatedGridLine direction="vertical" position="20%" delay={0.6} />
-      <AnimatedGridLine direction="vertical" position="40%" delay={0.8} />
-      <AnimatedGridLine direction="vertical" position="60%" delay={1.0} />
-      <AnimatedGridLine direction="vertical" position="80%" delay={1.2} />
+      {/* Subtle radial glow behind globe */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-radial from-accent/8 via-accent/3 to-transparent rounded-full blur-[60px]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] w-[500px] h-[500px] bg-gradient-radial from-accent-cyan/6 via-transparent to-transparent rounded-full blur-[80px]" />
 
-      {/* Large animated gradient orbs with glow */}
+      {/* Animated gradient orbs (subtle for light theme) */}
       <motion.div
-        animate={{
-          x: [0, 40, -30, 0],
-          y: [0, -40, 30, 0],
-          scale: [1, 1.2, 0.9, 1],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[10%] left-[5%] w-[500px] h-[500px] bg-gradient-to-br from-accent/15 via-accent-cyan/8 to-transparent rounded-full blur-[100px]"
+        animate={{ x: [0, 30, -20, 0], y: [0, -25, 15, 0] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[15%] left-[10%] w-[350px] h-[350px] bg-gradient-to-br from-accent/8 to-transparent rounded-full blur-[80px]"
       />
       <motion.div
-        animate={{
-          x: [0, -50, 30, 0],
-          y: [0, 30, -50, 0],
-          scale: [1, 0.85, 1.2, 1],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[10%] right-[5%] w-[600px] h-[600px] bg-gradient-to-br from-accent-pink/12 via-accent-orange/8 to-transparent rounded-full blur-[120px]"
-      />
-      <motion.div
-        animate={{
-          x: [0, 25, -35, 0],
-          y: [0, -25, 15, 0],
-          scale: [1, 1.1, 0.95, 1],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-gradient-to-br from-accent-cyan/10 to-accent/5 rounded-full blur-[80px]"
+        animate={{ x: [0, -35, 25, 0], y: [0, 20, -30, 0] }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-[15%] right-[10%] w-[400px] h-[400px] bg-gradient-to-br from-accent-pink/6 to-transparent rounded-full blur-[100px]"
       />
 
-      {/* Floating glowing particles */}
-      <FloatingParticle delay={0} x="12%" y="28%" size={5} color="rgba(108,99,255,0.5)" />
-      <FloatingParticle delay={0.8} x="82%" y="22%" size={4} color="rgba(0,198,255,0.5)" />
-      <FloatingParticle delay={1.6} x="72%" y="58%" size={5} color="rgba(255,107,157,0.4)" />
-      <FloatingParticle delay={2.4} x="22%" y="68%" size={3} color="rgba(108,99,255,0.4)" />
-      <FloatingParticle delay={1.2} x="48%" y="18%" size={3} color="rgba(0,198,255,0.45)" />
-      <FloatingParticle delay={3.2} x="88%" y="42%" size={4} color="rgba(108,99,255,0.35)" />
-      <FloatingParticle delay={2.0} x="8%" y="52%" size={4} color="rgba(255,154,86,0.4)" />
-      <FloatingParticle delay={0.4} x="65%" y="12%" size={3} color="rgba(255,107,157,0.35)" />
-      <FloatingParticle delay={3.6} x="35%" y="82%" size={4} color="rgba(0,198,255,0.35)" />
+      {/* Twinkling star particles */}
+      <StarParticle x="8%" y="15%" size={3} delay={0} color="rgba(108,99,255,0.6)" />
+      <StarParticle x="92%" y="20%" size={2} delay={0.5} color="rgba(0,198,255,0.5)" />
+      <StarParticle x="15%" y="75%" size={2.5} delay={1.0} color="rgba(255,107,157,0.5)" />
+      <StarParticle x="85%" y="70%" size={2} delay={1.5} color="rgba(108,99,255,0.5)" />
+      <StarParticle x="50%" y="8%" size={2} delay={0.3} color="rgba(0,198,255,0.6)" />
+      <StarParticle x="25%" y="40%" size={2.5} delay={0.8} color="rgba(108,99,255,0.4)" />
+      <StarParticle x="75%" y="45%" size={2} delay={1.3} color="rgba(255,107,157,0.4)" />
+      <StarParticle x="40%" y="88%" size={3} delay={0.2} color="rgba(0,198,255,0.5)" />
+      <StarParticle x="60%" y="12%" size={2} delay={1.8} color="rgba(108,99,255,0.5)" />
+      <StarParticle x="5%" y="50%" size={2.5} delay={2.0} color="rgba(255,154,86,0.5)" />
+      <StarParticle x="95%" y="55%" size={2} delay={0.7} color="rgba(108,99,255,0.4)" />
+      <StarParticle x="35%" y="25%" size={2} delay={1.2} color="rgba(0,198,255,0.4)" />
+      <StarParticle x="70%" y="85%" size={2.5} delay={0.4} color="rgba(255,107,157,0.5)" />
+      <StarParticle x="18%" y="60%" size={2} delay={1.6} color="rgba(108,99,255,0.5)" />
+      <StarParticle x="82%" y="35%" size={3} delay={0.9} color="rgba(0,198,255,0.6)" />
 
-      {/* Floating code icon cards with glass effect */}
-      <motion.div
-        animate={{ y: [0, -18, 0], rotate: [0, 6, -4, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[20%] right-[13%] p-3.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_rgba(108,99,255,0.12)] hidden md:flex"
-      >
-        <Code2 size={24} className="text-accent" />
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 14, 0], rotate: [0, -8, 6, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute bottom-[26%] left-[10%] p-3.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_rgba(0,198,255,0.12)] hidden md:flex"
-      >
-        <Braces size={24} className="text-accent-cyan" />
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, -12, 0], x: [0, 6, -6, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="absolute top-[58%] right-[7%] p-3.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_rgba(255,107,157,0.12)] hidden lg:flex"
-      >
-        <Terminal size={22} className="text-accent-pink" />
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 10, 0], x: [0, -5, 5, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        className="absolute top-[15%] left-[8%] p-3 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_rgba(108,99,255,0.1)] hidden lg:flex"
-      >
-        <Zap size={20} className="text-accent-orange" />
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, -8, 0], rotate: [0, 4, -3, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        className="absolute bottom-[35%] right-[18%] p-3 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-[0_8px_32px_rgba(0,198,255,0.1)] hidden xl:flex"
-      >
-        <Globe size={20} className="text-accent-cyan" />
-      </motion.div>
+      {/* Floating 2D diamonds for layered depth */}
+      <FloatingDiamond2D x="6%" y="22%" size={16} delay={0} color="rgba(108,99,255,0.3)" duration={8} />
+      <FloatingDiamond2D x="90%" y="18%" size={12} delay={1} color="rgba(0,198,255,0.25)" duration={9} />
+      <FloatingDiamond2D x="12%" y="72%" size={10} delay={2} color="rgba(255,107,157,0.25)" duration={7} />
+      <FloatingDiamond2D x="88%" y="68%" size={14} delay={0.5} color="rgba(108,99,255,0.2)" duration={10} />
+      <FloatingDiamond2D x="20%" y="35%" size={8} delay={1.5} color="rgba(0,198,255,0.2)" duration={8.5} />
+      <FloatingDiamond2D x="78%" y="80%" size={10} delay={3} color="rgba(255,154,86,0.2)" duration={9.5} />
+      <FloatingDiamond2D x="45%" y="5%" size={12} delay={2.5} color="rgba(108,99,255,0.2)" duration={7.5} />
+      <FloatingDiamond2D x="55%" y="92%" size={10} delay={1.8} color="rgba(0,198,255,0.2)" duration={11} />
 
-      {/* 3D Background */}
+      {/* 3D Scene: central globe + 3D diamonds + star dots */}
       <Scene />
 
-      {/* Premium overlay with grain */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/30 to-white/70 pointer-events-none" />
-      <div className="absolute inset-0 noise-overlay pointer-events-none opacity-30" />
+      {/* Subtle overlay to keep text readable */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/50 pointer-events-none" />
 
-      {/* Content */}
+      {/* Content — centered over the globe */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Badge with shimmer */}
+        {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 30, scale: 0.8, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.8, delay: stagger(0), ease: [0.25, 0.4, 0.25, 1] }}
-          className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/80 backdrop-blur-xl border border-accent/15 text-accent text-sm font-semibold mb-8 shadow-[0_4px_30px_rgba(108,99,255,0.12)] hover:shadow-[0_8px_40px_rgba(108,99,255,0.18)] transition-shadow duration-500"
+          className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/80 backdrop-blur-xl border border-accent/15 text-accent text-sm font-semibold mb-8 shadow-[0_4px_30px_rgba(108,99,255,0.12)]"
         >
           <motion.span
             animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
@@ -229,7 +189,7 @@ export function Hero() {
           Hello, I&apos;m
         </motion.p>
 
-        {/* Name — premium letter stagger with 3D flip */}
+        {/* Name — letter by letter with 3D perspective */}
         <motion.h1
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] font-bold font-display mb-4 leading-tight"
           initial={{ opacity: 0 }}
@@ -255,7 +215,7 @@ export function Hero() {
           </span>
         </motion.h1>
 
-        {/* Animated gradient divider line */}
+        {/* Animated gradient divider */}
         <motion.div
           className="flex justify-center mb-5"
           initial={{ opacity: 0, scaleX: 0 }}
@@ -275,7 +235,7 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* Typing Effect */}
+        {/* Typing effect */}
         <motion.div
           initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -321,7 +281,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Premium scroll indicator */}
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
