@@ -2,6 +2,9 @@
   "name": "gera-ujwala-portfolio",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,6 +18,7 @@
     "@tailwindcss/postcss": "^4.2.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.183.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
@@ -29,7 +33,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@types/three": "^0.183.1",
+    "@eslint/eslintrc": "^3.3.4",
     "eslint": "^9.39.3",
     "eslint-config-next": "^16.1.6"
   }
