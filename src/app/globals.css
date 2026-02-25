@@ -253,6 +253,22 @@ body {
   pointer-events: none;
 }
 
+/* Premium aurora background */
+.aurora-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 30%, rgba(108, 99, 255, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0, 198, 255, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 50% at 50% 80%, rgba(255, 107, 157, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 30% at 70% 60%, rgba(255, 154, 86, 0.03) 0%, transparent 70%);
+  animation: auroraShift 20s ease-in-out infinite;
+}
+
+@keyframes auroraShift {
+  0%, 100% { opacity: 0.8; filter: hue-rotate(0deg); }
+  33% { opacity: 1; filter: hue-rotate(5deg); }
+  66% { opacity: 0.9; filter: hue-rotate(-5deg); }
+}
+
 /* Hero text clip animation */
 .text-clip-reveal {
   overflow: hidden;
