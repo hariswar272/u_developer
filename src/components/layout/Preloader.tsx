@@ -123,8 +123,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  const firstName = "Mohan";
-  const lastName = "Krishna";
+  const brand = "Ruthless Coder";
   const isExiting = phase === 4;
 
   return (
@@ -259,17 +258,17 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
                 }}
               />
               <span className="relative text-white font-display font-bold text-[2.2rem] tracking-tight">
-                MK
+                RC
               </span>
             </motion.div>
           </motion.div>
 
-          {/* First name — letter by letter with stagger */}
-          <div className="flex items-center justify-center gap-[2px] mb-1">
-            {firstName.split("").map((char, i) => (
+          {/* Brand name — letter by letter with stagger */}
+          <div className="flex items-center justify-center gap-[2px] mb-3">
+            {brand.split("").map((char, i) => (
               <motion.span
-                key={`fn-${i}`}
-                className="text-4xl md:text-5xl font-display font-bold inline-block"
+                key={`br-${i}`}
+                className="text-3xl md:text-4xl font-display font-bold inline-block"
                 style={{
                   background:
                     "linear-gradient(135deg, #6c63ff 0%, #00c6ff 50%, #ff6b9d 100%)",
@@ -298,50 +297,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
                 }
                 transition={{
                   duration: 0.7,
-                  delay: i * 0.06,
-                  ease: [0.25, 0.4, 0.25, 1],
-                }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </div>
-
-          {/* Last name — letter by letter */}
-          <div className="flex items-center justify-center gap-[2px] mb-3">
-            {lastName.split("").map((char, i) => (
-              <motion.span
-                key={`ln-${i}`}
-                className="text-4xl md:text-5xl font-display font-bold inline-block"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #6c63ff 0%, #00c6ff 50%, #ff6b9d 100%)",
-                  backgroundSize: "200% 200%",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-                initial={{
-                  y: 60,
-                  opacity: 0,
-                  scale: 0.3,
-                  rotateY: -90,
-                  filter: "blur(12px)",
-                }}
-                animate={
-                  phase >= 2
-                    ? {
-                        y: 0,
-                        opacity: 1,
-                        scale: 1,
-                        rotateY: 0,
-                        filter: "blur(0px)",
-                      }
-                    : {}
-                }
-                transition={{
-                  duration: 0.7,
-                  delay: firstName.length * 0.06 + i * 0.06,
+                  delay: i * 0.05,
                   ease: [0.25, 0.4, 0.25, 1],
                 }}
               >
