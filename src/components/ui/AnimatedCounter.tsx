@@ -6,39 +6,11 @@ import {
   useSpring,
   useMotionValue,
   useInView,
-  useTransform,
-  animate,
 } from "framer-motion";
 
 interface AnimatedCounterProps {
   value: string;
   label: string;
-}
-
-// Individual animated digit with slot-machine style
-function SlotDigit({
-  digit,
-  delay,
-}: {
-  digit: string;
-  delay: number;
-}) {
-  return (
-    <span className="inline-block overflow-hidden relative" style={{ height: "1.1em" }}>
-      <motion.span
-        className="inline-block"
-        initial={{ y: "100%", opacity: 0 }}
-        animate={{ y: "0%", opacity: 1 }}
-        transition={{
-          duration: 0.6,
-          delay,
-          ease: [0.25, 0.4, 0.25, 1],
-        }}
-      >
-        {digit}
-      </motion.span>
-    </span>
-  );
 }
 
 function SpringNumber({
@@ -50,11 +22,11 @@ function SpringNumber({
 }) {
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {
-    stiffness: 40,
+    stiffness: 50,
     damping: 20,
-    mass: 1.2,
+    mass: 1,
   });
-  const [display, setDisplay] = useState("0");
+  const [display, setDisplay] = useState(0);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
@@ -64,7 +36,7 @@ function SpringNumber({
   useEffect(() => {
     const unsubscribe = springValue.on("change", (latest) => {
       const rounded = Math.round(latest);
-      setDisplay(`${rounded}`);
+      setDisplay(rounded);
       if (rounded === target) {
         setDone(true);
       }
@@ -78,18 +50,9 @@ function SpringNumber({
       animate={done ? { scale: [1, 1.08, 1] } : {}}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      {display.split("").map((char, i) => (
-        <SlotDigit key={`${i}-${char}`} digit={char} delay={i * 0.05} />
-      ))}
+      <span>{display}</span>
       {suffix && (
-        <motion.span
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8, duration: 0.4, type: "spring", stiffness: 200 }}
-          className="text-accent-cyan"
-        >
-          {suffix}
-        </motion.span>
+        <span className="text-accent-cyan">{suffix}</span>
       )}
     </motion.span>
   );
@@ -113,28 +76,25 @@ export function AnimatedCounter({ value, label }: AnimatedCounterProps) {
       transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
     >
       <div className="relative">
-        {/* Glow effect behind number */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center text-4xl md:text-5xl font-bold gradient-text blur-lg select-none pointer-events-none"
+        {/* Glow behind number */}
+        <div
+          className="absolute inset-0 flex items-center justify-center text-4xl md:text-5xl font-bold gradient-text blur-lg opacity-20 select-none pointer-events-none"
           aria-hidden="true"
-          animate={isInView ? { opacity: [0, 0.3, 0.2] } : { opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
         >
           {value}
-        </motion.div>
+        </div>
 
-        <div className="relative text-4xl md:text-5xl font-bold gradient-text mb-2">
+        <div className="relative text-4xl md:text-5xl font-bold gradient-text mb-2 tabular-nums">
           {isValid && isInView ? (
             <SpringNumber target={numericPart} suffix={suffix} />
           ) : isValid ? (
-            <span className="tabular-nums">0{suffix}</span>
+            <span>0{suffix}</span>
           ) : (
             value
           )}
         </div>
       </div>
 
-      {/* Label with slide-up */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
