@@ -76,11 +76,11 @@ export function Navbar() {
                     ease: "easeInOut",
                   }}
                 />
-                <span className="relative z-10 text-[11px]">MK</span>
+                <span className="relative z-10 text-[11px]">GU</span>
               </motion.div>
               <div className="hidden sm:flex items-center gap-1.5">
                 <span className="font-display font-bold text-sm text-foreground leading-none">
-                  Mohan Krishna
+                  Gera Ujwala
                 </span>
                 <motion.span
                   className="text-[9px] px-1.5 py-0.5 rounded-md bg-accent/8 text-accent font-mono font-medium tracking-wider"
@@ -206,6 +206,15 @@ export function Navbar() {
                   size={12}
                   className="relative z-10 -ml-0.5"
                 />
+              </motion.a>
+              <motion.a
+                href="tel:9392739776"
+                className="hidden md:flex items-center gap-1.5 px-3 py-[6px] rounded-xl text-[12px] font-semibold text-accent border border-accent/20 bg-accent/5 hover:bg-accent/10 transition-colors duration-300 overflow-hidden relative"
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="relative z-10"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span className="relative z-10">9392739776</span>
               </motion.a>
 
               {/* Mobile hamburger */}

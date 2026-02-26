@@ -21,11 +21,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kotte Mohan Krishna | Full-Stack Web Developer",
+  title: "Gera Ujwala | Full-Stack Web Developer",
   description:
-    "Portfolio of Kotte Mohan Krishna — a passionate full-stack web developer specializing in modern web technologies, building performant and beautiful digital experiences.",
+    "Portfolio of Gera Ujwala — a passionate full-stack web developer specializing in modern web technologies, building performant and beautiful digital experiences.",
   keywords: [
-    "Kotte Mohan Krishna",
+    "Gera Ujwala",
     "Full-Stack Developer",
     "Web Developer",
     "React",
@@ -34,19 +34,19 @@ export const metadata: Metadata = {
     "Node.js",
     "Portfolio",
   ],
-  authors: [{ name: "Kotte Mohan Krishna" }],
+  authors: [{ name: "Gera Ujwala" }],
   openGraph: {
-    title: "Kotte Mohan Krishna | Full-Stack Web Developer",
+    title: "Gera Ujwala | Full-Stack Web Developer",
     description:
-      "Portfolio of Kotte Mohan Krishna — a passionate full-stack web developer specializing in modern web technologies.",
+      "Portfolio of Gera Ujwala — a passionate full-stack web developer specializing in modern web technologies.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kotte Mohan Krishna | Full-Stack Web Developer",
+    title: "Gera Ujwala | Full-Stack Web Developer",
     description:
-      "Portfolio of Kotte Mohan Krishna — a passionate full-stack web developer specializing in modern web technologies.",
+      "Portfolio of Gera Ujwala — a passionate full-stack web developer specializing in modern web technologies.",
   },
   robots: {
     index: true,

@@ -39,7 +39,7 @@ export function About() {
               <motion.div className="relative w-full h-full bg-gradient-to-br from-accent/10 via-background-secondary to-accent-cyan/10 border border-border/50 overflow-hidden shadow-xl animate-morph">
                 <div className="w-full h-full flex items-center justify-center">
                   <span className="text-7xl md:text-8xl font-display font-bold gradient-text select-none">
-                    MK
+                    GU
                   </span>
                 </div>
               </motion.div>

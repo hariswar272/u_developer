@@ -1,9 +1,9 @@
 import { ProfileData } from "@/types";
 
 export const profile: ProfileData = {
-  name: "Kotte Mohan Krishna",
-  firstName: "Kotte",
-  lastName: "Mohan Krishna",
+  name: "Gera Ujwala",
+  firstName: "Gera",
+  lastName: "Ujwala",
   tagline:
     "Crafting pixel-perfect web experiences with cutting-edge technology",
   bio: "I'm a passionate full-stack web developer and Cyber Security student at Vasireddy Venkatadri Institute of Technology (VVIT). I blend creative design with robust engineering to build modern web applications that are both beautiful and performant. With expertise in React, Next.js, Node.js, and TypeScript, I turn complex ideas into elegant, user-centric digital products.",
