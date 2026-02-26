@@ -62,11 +62,11 @@ export function Navbar() {
                   animate={{ x: ["-100%", "100%"] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
                 />
-                <span className="relative z-10">GU</span>
+                <span className="relative z-10">MK</span>
               </motion.div>
               <div className="hidden sm:flex flex-col">
                 <span className="font-display font-bold text-sm text-foreground leading-none">
-                  Gera Ujwala
+                  Mohan Krishna
                 </span>
                 <span className="text-[10px] text-foreground-subtle font-mono tracking-wider mt-0.5">
                   Portfolio
