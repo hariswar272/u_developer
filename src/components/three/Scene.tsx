@@ -15,7 +15,15 @@ export function Scene() {
         height: "100%",
         pointerEvents: "none",
       }}
-      gl={{ alpha: true, antialias: true }}
+      gl={{
+        alpha: true,
+        antialias: false, // Disable for performance — wireframes don't need it
+        powerPreference: "high-performance",
+        stencil: false,
+        depth: false,
+      }}
+      dpr={[1, 1.5]} // Cap pixel ratio to 1.5x instead of device max
+      frameloop="always"
     >
       <FloatingGeometry />
     </Canvas>
