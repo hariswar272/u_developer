@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles } from "lucide-react";
+import { X, Sparkles, ArrowUpRight } from "lucide-react";
 import { navLinks } from "@/data/navigation";
 
 interface MobileMenuProps {
@@ -32,17 +32,35 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[60] md:hidden"
         >
-          {/* Backdrop blur */}
+          {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-white/90 backdrop-blur-2xl"
+            className="absolute inset-0 bg-white/95 backdrop-blur-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
 
-          {/* Decorative gradient orbs */}
-          <div className="absolute top-[20%] left-[10%] w-64 h-64 bg-gradient-to-br from-accent/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute bottom-[20%] right-[10%] w-48 h-48 bg-gradient-to-br from-accent-cyan/10 to-transparent rounded-full blur-3xl" />
+          {/* Tech grid */}
+          <div
+            className="absolute inset-0 opacity-[0.02] pointer-events-none"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(108,99,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(108,99,255,1) 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
+          />
+
+          {/* Gradient orbs */}
+          <motion.div
+            className="absolute top-[15%] left-[5%] w-72 h-72 bg-gradient-to-br from-accent/8 to-transparent rounded-full blur-3xl"
+            animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-[15%] right-[5%] w-56 h-56 bg-gradient-to-br from-accent-cyan/8 to-transparent rounded-full blur-3xl"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          />
 
           {/* Close Button */}
           <div className="relative flex justify-end p-5">
@@ -53,52 +71,64 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               whileTap={{ scale: 0.9, rotate: 90 }}
               initial={{ opacity: 0, rotate: -90 }}
               animate={{ opacity: 1, rotate: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.15, type: "spring", stiffness: 200 }}
             >
               <X size={24} />
             </motion.button>
           </div>
 
           {/* Navigation Links */}
-          <nav className="relative flex flex-col items-center justify-center gap-6 mt-12">
+          <nav className="relative flex flex-col items-center justify-center gap-5 mt-8">
             {navLinks.map((link, index) => (
               <motion.a
                 key={link.href}
                 href={link.href}
                 onClick={onClose}
-                initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 transition={{
-                  delay: 0.1 + index * 0.07,
+                  delay: 0.08 + index * 0.06,
                   duration: 0.5,
                   ease: [0.25, 0.4, 0.25, 1],
                 }}
-                className="relative text-2xl font-display font-semibold text-foreground-muted hover:text-accent transition-colors duration-300 py-2"
+                className="group flex items-center gap-3 text-2xl font-display font-semibold text-foreground-muted hover:text-accent transition-colors duration-300 py-1.5"
               >
-                <span className="relative z-10">{link.label}</span>
-                <motion.div
-                  className="absolute bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-accent to-accent-cyan rounded-full origin-left"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
+                <motion.span
+                  className="inline-block w-0 group-hover:w-5 overflow-hidden transition-all duration-300"
+                >
+                  <ArrowUpRight size={18} className="text-accent" />
+                </motion.span>
+                <span>{link.label}</span>
               </motion.a>
             ))}
 
-            {/* CTA button in mobile menu */}
+            {/* CTA */}
             <motion.a
               href="#contact"
               onClick={onClose}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                delay: 0.1 + navLinks.length * 0.07 + 0.1,
+                delay: 0.08 + navLinks.length * 0.06 + 0.1,
                 duration: 0.5,
               }}
-              className="mt-4 inline-flex items-center gap-2 px-8 py-3 rounded-2xl bg-gradient-to-r from-accent to-accent-cyan text-white font-semibold shadow-[0_4px_20px_rgba(108,99,255,0.3)]"
+              className="mt-6 relative inline-flex items-center gap-2 px-8 py-3 rounded-2xl text-white font-semibold overflow-hidden"
+              style={{
+                background: "linear-gradient(135deg, #6c63ff, #00c6ff)",
+              }}
             >
-              <Sparkles size={16} />
-              Let&apos;s Talk
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                animate={{ x: ["-150%", "150%"] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 2,
+                  ease: "easeInOut",
+                }}
+              />
+              <Sparkles size={16} className="relative z-10" />
+              <span className="relative z-10">Let&apos;s Talk</span>
             </motion.a>
           </nav>
         </motion.div>

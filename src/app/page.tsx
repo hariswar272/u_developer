@@ -26,23 +26,25 @@ export default function Home() {
         {loading && <Preloader key="preloader" onComplete={handleComplete} />}
       </AnimatePresence>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: loading ? 0 : 1 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Experience />
-          <Contact />
-        </main>
-        <Footer />
-        <ScrollToTop />
-      </motion.div>
+      {!loading && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
+        >
+          <Navbar />
+          <main>
+            <Hero />
+            <About />
+            <Skills />
+            <Projects />
+            <Experience />
+            <Contact />
+          </main>
+          <Footer />
+          <ScrollToTop />
+        </motion.div>
+      )}
     </>
   );
 }
