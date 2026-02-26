@@ -65,17 +65,8 @@ export function Navbar() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 15 }}
               >
-                {/* Shimmer */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  animate={{ x: ["-150%", "150%"] }}
-                  transition={{
-                    duration: 1.8,
-                    repeat: Infinity,
-                    repeatDelay: 4,
-                    ease: "easeInOut",
-                  }}
-                />
+                {/* Shimmer — CSS (no Framer Motion re-renders) */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-[shimmer-slide_6s_ease-in-out_infinite]" />
                 <span className="relative z-10 text-[11px]">GU</span>
               </motion.div>
               <div className="hidden sm:flex items-center gap-1.5">
@@ -189,17 +180,8 @@ export function Navbar() {
                 whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.97 }}
               >
-                {/* Shimmer */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  animate={{ x: ["-150%", "150%"] }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 3,
-                    ease: "easeInOut",
-                  }}
-                />
+                {/* Shimmer — CSS (no Framer Motion re-renders) */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer-slide_5s_ease-in-out_infinite]" />
                 <Sparkles size={11} className="relative z-10" />
                 <span className="relative z-10">Let&apos;s Talk</span>
                 <ChevronRight

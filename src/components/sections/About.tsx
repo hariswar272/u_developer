@@ -45,23 +45,12 @@ export function About() {
               </motion.div>
 
               {/* Orbiting elements */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute -top-3 -right-3 w-16 h-16 rounded-full border-2 border-dashed border-accent/20"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute -bottom-2 -left-2 w-12 h-12 rounded-full border-2 border-dashed border-accent-cyan/20"
-              />
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-4 -left-6 w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-cyan flex items-center justify-center shadow-lg"
-              >
+              {/* Orbiting elements — CSS animations (no Framer Motion re-renders) */}
+              <div className="absolute -top-3 -right-3 w-16 h-16 rounded-full border-2 border-dashed border-accent/20 animate-[spin_25s_linear_infinite]" />
+              <div className="absolute -bottom-2 -left-2 w-12 h-12 rounded-full border-2 border-dashed border-accent-cyan/20 animate-[spin_30s_linear_infinite_reverse]" />
+              <div className="absolute top-4 -left-6 w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-cyan flex items-center justify-center shadow-lg animate-[bounce-gentle_3s_ease-in-out_infinite]">
                 <Zap size={16} className="text-white" />
-              </motion.div>
+              </div>
             </div>
           </SlideIn>
 

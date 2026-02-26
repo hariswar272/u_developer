@@ -50,17 +50,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             }}
           />
 
-          {/* Gradient orbs */}
-          <motion.div
-            className="absolute top-[15%] left-[5%] w-72 h-72 bg-gradient-to-br from-accent/8 to-transparent rounded-full blur-3xl"
-            animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute bottom-[15%] right-[5%] w-56 h-56 bg-gradient-to-br from-accent-cyan/8 to-transparent rounded-full blur-3xl"
-            animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          />
+          {/* Gradient orbs — CSS (no Framer Motion re-renders) */}
+          <div className="absolute top-[15%] left-[5%] w-72 h-72 bg-gradient-to-br from-accent/8 to-transparent rounded-full blur-3xl animate-[morph-blob_4s_ease-in-out_infinite]" />
+          <div className="absolute bottom-[15%] right-[5%] w-56 h-56 bg-gradient-to-br from-accent-cyan/8 to-transparent rounded-full blur-3xl animate-[morph-blob_5s_ease-in-out_infinite]" />
 
           {/* Close Button */}
           <div className="relative flex justify-end p-5">

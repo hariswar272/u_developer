@@ -24,7 +24,7 @@
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
-  --animate-gradient-shift: gradient-shift 6s ease infinite;
+  --animate-gradient-shift: gradient-shift 15s ease infinite;
   --animate-bounce-slow: bounce-slow 2s ease-in-out infinite;
   --animate-shimmer: shimmer 2.5s ease-in-out infinite;
   --animate-morph: morph 8s ease-in-out infinite;
@@ -51,8 +51,40 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(108, 99, 255, 0.15), 0 0 60px rgba(108, 99, 255, 0.05); }
-  50% { box-shadow: 0 0 40px rgba(108, 99, 255, 0.25), 0 0 80px rgba(108, 99, 255, 0.1); }
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.03); opacity: 1; }
+}
+
+@keyframes shimmer-slide {
+  0%, 100% { transform: translateX(-150%); }
+  35% { transform: translateX(150%); }
+  35.01% { transform: translateX(-150%); }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes morph-blob {
+  0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.6; }
+  33% { transform: scale(1.15) translate(20px, -15px); opacity: 0.4; }
+  66% { transform: scale(0.9) translate(-15px, 10px); opacity: 0.5; }
+}
+
+@keyframes pulse-glow-soft {
+  0%, 100% { transform: scale(0.85); opacity: 0.25; }
+  50% { transform: scale(1.15); opacity: 0.5; }
+}
+
+@keyframes scan-line {
+  0%, 100% { top: 0%; }
+  50% { top: 100%; }
 }
 
 @keyframes gradient-shift {
@@ -182,7 +214,7 @@ body {
 .gradient-text {
   background: linear-gradient(135deg, #6c63ff 0%, #00c6ff 50%, #ff6b9d 100%);
   background-size: 200% 200%;
-  animation: gradient-shift 6s ease infinite;
+  animation: gradient-shift 15s ease infinite;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

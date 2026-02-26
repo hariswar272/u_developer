@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface TypeWriterProps {
@@ -73,15 +72,7 @@ export function TypeWriter({
   return (
     <span className={cn("inline-flex items-center", className)}>
       <span className="inline-block">{displayText}</span>
-      <motion.span
-        animate={{ opacity: [1, 0, 1] }}
-        transition={{
-          duration: 1,
-          repeat: Infinity,
-          ease: "steps(2)",
-        }}
-        className="inline-block w-[3px] h-[1.1em] ml-1 translate-y-[0.05em] rounded-full bg-gradient-to-b from-accent to-accent-cyan shadow-[0_0_8px_rgba(108,99,255,0.5)]"
-      />
+      <span className="inline-block w-[3px] h-[1.1em] ml-1 translate-y-[0.05em] rounded-full bg-gradient-to-b from-accent to-accent-cyan shadow-[0_0_8px_rgba(108,99,255,0.5)] animate-[blink_1s_steps(2)_infinite]" />
     </span>
   );
 }
